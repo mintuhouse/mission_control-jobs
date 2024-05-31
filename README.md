@@ -1,6 +1,6 @@
 # Mission Control — Jobs
 
-This gem provides a Rails-based frontend to Active Job adapters. It currently supports [Resque](https://github.com/resque/resque/) and [Solid Queue](https://github.com/basecamp/solid_queue). Its features depend on those offered by the adapter itself. At a minimum, it allows you to inspect job queues and jobs currently waiting in those queues and inspect and retry or discard failed jobs.
+This gem provides a Rails-based frontend to Active Job adapters. It currently supports [Resque](https://github.com/resque/resque/) and [Solid Queue](https://github.com/rails/solid_queue). Its features depend on those offered by the adapter itself. At a minimum, it allows you to inspect job queues and jobs currently waiting in those queues and inspect and retry or discard failed jobs.
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -56,6 +56,7 @@ Besides `base_controller_class`, you can also set the following for `MissionCont
 - `adapters`: a list of adapters that you want Mission Control to use and extend. By default this will be the adapter you have set for `active_job.queue_adapter`.
 - `internal_query_count_limit`: in count queries, the maximum number of records that will be counted if the adapter needs to limit these queries. True counts above this number will be returned as `INFINITY`. This keeps count queries fast—defaults to `500,000`
 - `scheduled_job_delay_threshold`: the time duration before a scheduled job is considered delayed. Defaults to `1.minute` (a job is considered delayed if it hasn't transitioned from the `scheduled` status 1 minute after the scheduled time).
+- `show_console_help`: whether to show the console help. If you don't want the console help message, set this to `false`—defaults to `true`.
 
 This library extends Active Job with a querying interface and the following setting:
 - `config.active_job.default_page_size`: the internal batch size that Active Job will use when sending queries to the underlying adapter and the batch size for the bulk operations defined above—defaults to `1000`.
@@ -114,7 +115,7 @@ end
 
 This is an example for two different apps, BC4 and HEY, each one with two servers. BC4 has two Resque servers with two different configurations, and HEY has one Resque server and one Solid Queue server.
 
-Currently, only one Solid Queue configuration is supported, but support for several Solid Queue backends (with different databases) [is planned](https://github.com/basecamp/mission_control-jobs/issues/35).
+Currently, only one Solid Queue configuration is supported, but support for several Solid Queue backends (with different databases) [is planned](https://github.com/rails/mission_control-jobs/issues/35).
 
 This is how we set Resque and Solid Queue together when we migrated from one to the other:
 
@@ -133,7 +134,7 @@ When you have multiple apps and servers configured, you can choose between them 
 
 ## Basic UI usage
 
-As mentioned, the features available in Mission Control depend on the adapter you're using, as each adapter supports different features. Besides inspecting the queues and the jobs in them, and discarding and retrying failed jobs, you can inspect jobs in different statuses supported by each adapter, filter them by _queue name_ and _job class name_ (with the idea of [adding more filters in the future](https://github.com/basecamp/mission_control-jobs/issues/30)), pause and un-pause queues (if the adapter allows that), inspect workers, know which jobs are being run by what worker, checking a specific job or a specific worker...
+As mentioned, the features available in Mission Control depend on the adapter you're using, as each adapter supports different features. Besides inspecting the queues and the jobs in them, and discarding and retrying failed jobs, you can inspect jobs in different statuses supported by each adapter, filter them by _queue name_ and _job class name_ (with the idea of [adding more filters in the future](https://github.com/rails/mission_control-jobs/issues/30)), pause and un-pause queues (if the adapter allows that), inspect workers, know which jobs are being run by what worker, checking a specific job or a specific worker...
 
 ![Default queue tab](docs/images/default-queue.png)
 
